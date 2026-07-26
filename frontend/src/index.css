@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- Color: "control room" palette --- a deep slate command rail,
+     calm neutral canvas, and one confident indigo accent, with
+     semantic greens/ambers/roses for stock & status signals. */
+  --color-ink-950: #0b1120;
+  --color-ink-900: #0f172a;
+  --color-ink-800: #1e293b;
+  --color-ink-700: #334155;
+  --color-ink-500: #64748b;
+  --color-ink-300: #cbd5e1;
+  --color-ink-100: #f1f5f9;
+  --color-canvas: #f8fafc;
+
+  --color-brand-600: #4338ca;
+  --color-brand-500: #4f46e5;
+  --color-brand-400: #6366f1;
+  --color-brand-100: #e0e7ff;
+
+  --color-good-600: #059669;
+  --color-good-500: #10b981;
+  --color-good-100: #d1fae5;
+
+  --color-warn-600: #d97706;
+  --color-warn-500: #f59e0b;
+  --color-warn-100: #fef3c7;
+
+  --color-bad-600: #e11d48;
+  --color-bad-500: #f43f5e;
+  --color-bad-100: #ffe4e6;
+
+  /* --- Type --- */
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-300);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
