@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button, Input, Select, Card } from "../components/ui";
+import webelopLogo from "../assets/webelop-logo.png";
 
 const INDUSTRIES = [
   ["general", "General"],
@@ -50,11 +51,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-ink-950 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
-        <div className="flex items-center gap-2.5 justify-center mb-8">
-          <div className="w-9 h-9 rounded-lg bg-brand-500 flex items-center justify-center">
-            <div className="w-3.5 h-3.5 rounded-sm bg-white" />
-          </div>
-          <span className="font-display font-semibold text-white text-2xl tracking-tight">Nexus</span>
+        <div className="flex justify-center mb-6">
+          <img src={webelopLogo} alt="Webelop" className="w-40 h-40 object-contain" />
         </div>
 
         <Card className="p-7 sm:p-8">

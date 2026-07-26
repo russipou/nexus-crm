@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
 
-const ACCESS_KEY = "nexus_access_token";
-const REFRESH_KEY = "nexus_refresh_token";
+const ACCESS_KEY = "webelop_access_token";
+const REFRESH_KEY = "webelop_refresh_token";
 
 export const tokenStore = {
   getAccess: () => localStorage.getItem(ACCESS_KEY),

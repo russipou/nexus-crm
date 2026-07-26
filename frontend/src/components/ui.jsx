@@ -30,6 +30,7 @@ export function Button({ variant = "primary", size = "md", className, children, 
 
 const badgeTones = {
   brand: "bg-brand-100 text-brand-600",
+  accent: "bg-accent-100 text-accent-600",
   good: "bg-good-100 text-good-600",
   warn: "bg-warn-100 text-warn-600",
   bad: "bg-bad-100 text-bad-600",

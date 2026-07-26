@@ -93,8 +93,8 @@ export default function DashboardPage() {
               <AreaChart data={revenue_trend}>
                 <defs>
                   <linearGradient id="revGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#4f46e5" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#14b8a6" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#14b8a6" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -104,7 +104,7 @@ export default function DashboardPage() {
                   formatter={(value) => formatCurrency(value)}
                   contentStyle={{ borderRadius: 12, border: "1px solid #f1f5f9", fontSize: 13 }}
                 />
-                <Area type="monotone" dataKey="total" stroke="#4f46e5" strokeWidth={2.5} fill="url(#revGradient)" />
+                <Area type="monotone" dataKey="total" stroke="#0d9488" strokeWidth={2.5} fill="url(#revGradient)" />
               </AreaChart>
             </ResponsiveContainer>
           )}
@@ -126,7 +126,7 @@ export default function DashboardPage() {
             <div className="space-y-3">
               {pipeline.map((row) => (
                 <div key={row.status} className="flex items-center justify-between">
-                  <Badge tone={row.status === "active" ? "good" : row.status === "lead" ? "brand" : "neutral"}>
+                  <Badge tone={row.status === "active" ? "good" : row.status === "lead" ? "accent" : "neutral"}>
                     {row.status}
                   </Badge>
                   <span className="text-sm font-medium text-ink-900 font-mono">{row.count}</span>

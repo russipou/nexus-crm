@@ -6,7 +6,7 @@ import {
 } from "../components/ui";
 import { formatCurrency, formatDate } from "../utils/format";
 
-const STATUS_TONE = { lead: "brand", active: "good", inactive: "neutral" };
+const STATUS_TONE = { lead: "accent", active: "good", inactive: "neutral" };
 
 const emptyForm = {
   name: "", company: "", email: "", phone: "", address: "", status: "lead",
