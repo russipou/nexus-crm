@@ -2,7 +2,6 @@ import api from "./client";
 
 export const authApi = {
   login: (username, password) => api.post("/auth/login/", { username, password }),
-  signup: (payload) => api.post("/auth/signup/", payload),
   me: () => api.get("/auth/me/"),
   updateMe: (payload) => api.patch("/auth/me/", payload),
   team: () => api.get("/auth/team/"),
@@ -17,6 +16,13 @@ export const customersApi = {
   update: (id, payload) => api.patch(`/customers/${id}/`, payload),
   remove: (id) => api.delete(`/customers/${id}/`),
   addNote: (customerId, body) => api.post("/customer-notes/", { customer: customerId, body }),
+  importCsv: (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return api.post("/customers/import/", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
 };
 
 export const inventoryApi = {
@@ -29,6 +35,13 @@ export const inventoryApi = {
   createCategory: (payload) => api.post("/categories/", payload),
   listMovements: (params) => api.get("/stock-movements/", { params }),
   createMovement: (payload) => api.post("/stock-movements/", payload),
+  importCsv: (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return api.post("/products/import/", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
 };
 
 export const salesApi = {

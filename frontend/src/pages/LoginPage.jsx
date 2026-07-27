@@ -1,27 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Button, Input, Select, Card } from "../components/ui";
+import { Button, Input, Card } from "../components/ui";
 import webelopLogo from "../assets/webelop-logo.png";
 
-const INDUSTRIES = [
-  ["general", "General"],
-  ["retail", "Retail"],
-  ["catering", "Catering & Food Service"],
-  ["services", "Professional Services"],
-  ["wholesale", "Wholesale / Distribution"],
-  ["manufacturing", "Manufacturing"],
-  ["other", "Other"],
-];
-
 export default function LoginPage() {
-  const [mode, setMode] = useState("login"); // "login" | "signup"
-  const [form, setForm] = useState({
-    username: "", password: "", business_name: "", industry: "general", email: "", first_name: "",
-  });
+  const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login, signup } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -31,17 +18,13 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
     try {
-      if (mode === "login") {
-        await login(form.username, form.password);
-      } else {
-        await signup(form);
-      }
+      await login(form.username, form.password);
       navigate("/");
     } catch (err) {
       const detail =
         err.response?.data?.detail ||
         Object.values(err.response?.data || {})?.[0]?.[0] ||
-        "Something went wrong. Please check your details and try again.";
+        "Couldn't log in. Please check your username and password.";
       setError(detail);
     } finally {
       setLoading(false);
@@ -56,63 +39,25 @@ export default function LoginPage() {
         </div>
 
         <Card className="p-7 sm:p-8">
-          <h1 className="font-display font-semibold text-xl text-ink-900 mb-1">
-            {mode === "login" ? "Welcome back" : "Set up your business"}
-          </h1>
-          <p className="text-sm text-ink-500 mb-6">
-            {mode === "login"
-              ? "Log in to your CRM workspace."
-              : "One account, and your team is ready to go."}
-          </p>
+          <h1 className="font-display font-semibold text-xl text-ink-900 mb-1">Welcome back</h1>
+          <p className="text-sm text-ink-500 mb-6">Log in to your CRM workspace.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {mode === "signup" && (
-              <>
-                <Input
-                  label="Business name"
-                  required
-                  value={form.business_name}
-                  onChange={update("business_name")}
-                  placeholder="Green Leaf Catering Co."
-                />
-                <Select label="Industry" value={form.industry} onChange={update("industry")}>
-                  {INDUSTRIES.map(([value, label]) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-                </Select>
-                <Input
-                  label="Your name"
-                  value={form.first_name}
-                  onChange={update("first_name")}
-                  placeholder="Alex"
-                />
-                <Input
-                  label="Email"
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={update("email")}
-                  placeholder="alex@yourbusiness.com"
-                />
-              </>
-            )}
             <Input
               label="Username"
               required
               value={form.username}
               onChange={update("username")}
               autoComplete="username"
+              autoFocus
             />
             <Input
               label="Password"
               type="password"
               required
-              minLength={8}
               value={form.password}
               onChange={update("password")}
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
+              autoComplete="current-password"
             />
 
             {error && (
@@ -120,24 +65,13 @@ export default function LoginPage() {
             )}
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Please wait…" : mode === "login" ? "Log in" : "Create business account"}
+              {loading ? "Please wait…" : "Log in"}
             </Button>
           </form>
-
-          <button
-            onClick={() => {
-              setMode(mode === "login" ? "signup" : "login");
-              setError("");
-            }}
-            className="w-full text-center text-sm text-ink-500 hover:text-ink-900 mt-5"
-          >
-            {mode === "login" ? "New business? Sign up" : "Already have an account? Log in"}
-          </button>
         </Card>
 
         <p className="text-center text-xs text-ink-500 mt-6">
-          Demo login — username <span className="font-mono text-ink-300">demo</span>, password{" "}
-          <span className="font-mono text-ink-300">demo12345</span>
+          Forgotten your details? Contact whoever set up this workspace for you.
         </p>
       </div>
     </div>

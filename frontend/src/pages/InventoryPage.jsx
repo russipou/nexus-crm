@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Search, Package, AlertTriangle, ArrowUpDown } from "lucide-react";
+import { Plus, Search, Package, AlertTriangle, ArrowUpDown, Upload } from "lucide-react";
 import { inventoryApi } from "../api/endpoints";
 import {
   PageHeader, Button, Card, Badge, Input, Select, Modal, EmptyState, Spinner,
 } from "../components/ui";
+import ImportCsvModal from "../components/ImportCsvModal";
 import { formatCurrency } from "../utils/format";
 
 const emptyForm = {
@@ -20,6 +21,7 @@ export default function InventoryPage() {
   const [lowStockOnly, setLowStockOnly] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
@@ -117,9 +119,14 @@ export default function InventoryPage() {
         title="Inventory"
         description="Track products, stock levels, and reorder alerts."
         actions={
-          <Button onClick={openCreate}>
-            <Plus className="w-4 h-4" /> Add product
-          </Button>
+          <>
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <Upload className="w-4 h-4" /> Import CSV
+            </Button>
+            <Button onClick={openCreate}>
+              <Plus className="w-4 h-4" /> Add product
+            </Button>
+          </>
         }
       />
 
@@ -275,6 +282,15 @@ export default function InventoryPage() {
           </div>
         </form>
       </Modal>
+
+      <ImportCsvModal
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+        title="Import products from CSV"
+        columnsHint="Columns recognised: name (required), sku, category, unit, cost_price, unit_price, quantity_in_stock, reorder_level, description. Missing SKUs are generated automatically. Existing products are matched by SKU to avoid duplicates."
+        onImport={inventoryApi.importCsv}
+        onDone={load}
+      />
     </div>
   );
 }

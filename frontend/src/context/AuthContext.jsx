@@ -34,18 +34,13 @@ export function AuthProvider({ children }) {
     await loadMe();
   };
 
-  const signup = async (payload) => {
-    await authApi.signup(payload);
-    await login(payload.username, payload.password);
-  };
-
   const logout = () => {
     tokenStore.clear();
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, refresh: loadMe }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, refresh: loadMe }}>
       {children}
     </AuthContext.Provider>
   );

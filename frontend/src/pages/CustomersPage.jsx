@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Search, Users, Mail, Phone } from "lucide-react";
+import { Plus, Search, Users, Mail, Phone, Upload } from "lucide-react";
 import { customersApi } from "../api/endpoints";
 import {
   PageHeader, Button, Card, Badge, Input, Select, TextArea, Modal, EmptyState, Spinner,
 } from "../components/ui";
+import ImportCsvModal from "../components/ImportCsvModal";
 import { formatCurrency, formatDate } from "../utils/format";
 
 const STATUS_TONE = { lead: "accent", active: "good", inactive: "neutral" };
@@ -19,6 +20,7 @@ export default function CustomersPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
@@ -82,9 +84,14 @@ export default function CustomersPage() {
         title="Customers"
         description="Every lead and customer relationship, in one place."
         actions={
-          <Button onClick={openCreate}>
-            <Plus className="w-4 h-4" /> Add customer
-          </Button>
+          <>
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <Upload className="w-4 h-4" /> Import CSV
+            </Button>
+            <Button onClick={openCreate}>
+              <Plus className="w-4 h-4" /> Add customer
+            </Button>
+          </>
         }
       />
 
@@ -222,6 +229,15 @@ export default function CustomersPage() {
           </div>
         </form>
       </Modal>
+
+      <ImportCsvModal
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+        title="Import customers from CSV"
+        columnsHint="Columns recognised: name (required), company, email, phone, address, status (lead/active/inactive), source, estimated_value, tags. Existing customers are matched by email to avoid duplicates."
+        onImport={customersApi.importCsv}
+        onDone={load}
+      />
     </div>
   );
 }
